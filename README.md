@@ -3,5 +3,7 @@
 ## User Story
 
 ```md
-AS A user looking to practice typing
+AS A computer user
+I WANT to practice typing under pressure
+SO THAT I can learn to type more efficiently
 ```
