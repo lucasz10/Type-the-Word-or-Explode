@@ -1,0 +1,10 @@
+
+Word typing game
+-Fast paced game, user has to type 10 random words as fast as possible without messing up
+-Score drops the longer user takes to type the words
+
+https://random-words-api.herokuapp.com/w?n=10  --API that is called to provide 10 random words to type out in an array
+https://developers.giphy.com/docs/api#quick-start-guide  --API to be called to supply a random GIf or IMG
+
+TODO
+Leave correct pronounciation of Giphy
