@@ -5,66 +5,66 @@ var timerEl = document.getElementById('gameBrief');
 // change or adder h2 header to add id = time
 var message = "10 words"
 var startBtn = document.getElementById("nicknameBtn");
-
+var endBtn = document.getElementById("returnHome");
 
 //Section for defining functions
 
 function countdown() {
-    var timeLeft = 10
-    var name = getElementById('nickName')
+  var timeLeft = 10
+  var name = getElementById('nickName')
 
-    var timeInterval = setInterval(function () {
-      if (timeLeft > 1) {
-        timerEl.textContent = timeLeft + ' seconds remaining' + name ;
-        timeLeft--;
-      } else if (timeLeft === 1) {
-        timerEl.textContent = timeLeft + ' second remaining' + name ;
-        timeLeft--;
-      } else {
+  var timeInterval = setInterval(function () {
+    if (timeLeft > 1) {
+      timerEl.textContent = timeLeft + ' seconds remaining' + name;
+      timeLeft--;
+    } else if (timeLeft === 1) {
+      timerEl.textContent = timeLeft + ' second remaining' + name;
+      timeLeft--;
+    } else {
 
-        timerEl.textContent = '';
-        clearInterval(timeInterval);
-        displayMessage();
-        console.log(name)
+      timerEl.textContent = '';
+      clearInterval(timeInterval);
+      displayMessage();
+      console.log(name)
 
-        //maybe look at timer ending in seperate function
+      //maybe look at timer ending in seperate function
 
-      }
-    }, 1000);
+    }
+  }, 1000);
 }
-  
-function displayMessage() { //Displaying the challenge words? Work off this code to display words. Don't need timer
-    var wordCount = 0;
-  
-    var msgInterval = setInterval(function () {
 
-      if (words[wordCount] === undefined) {
-        clearInterval(msgInterval);
-      } else {
-        mainEl.textContent = words[wordCount];
-        wordCount++;
-      }
-    }, 3000);
- }
+function displayMessage() { //Displaying the challenge words? Work off this code to display words. Don't need timer
+  var wordCount = 0;
+
+  var msgInterval = setInterval(function () {
+
+    if (words[wordCount] === undefined) {
+      clearInterval(msgInterval);
+    } else {
+      mainEl.textContent = words[wordCount];
+      wordCount++;
+    }
+  }, 3000);
+}
 
 function callWordsAPI() {
 
   var wordsAPI = "https://random-words-api.herokuapp.com/w?n=10"; //Need to throw this call in beginning of gameStart function
   fetch(wordsAPI)
-  .then(function (response) {
+    .then(function (response) {
       return response.json();
-  })
-  .then (function (data) {
+    })
+    .then(function (data) {
       gameStart(data)
-  });
+    });
 
 };
 
 function gameStart(words) {
-  
+
   var guessWordsObj = []; //Creates a multidimensional array of guesswords with strings broken out into separate arrays
 
-  for(i = 0; i < words.length ; i++) {
+  for (i = 0; i < words.length; i++) {
     var guessWord = words[i].split("")
     guessWordsObj.push(guessWord);
   }
@@ -76,6 +76,15 @@ function gameStart(words) {
   document.getElementById("endGame").style.display = "none";
 
 };
+
+function returnHome() {
+  document.getElementById("landingPage").style.display = "flex";
+  document.getElementById("inGame").style.display = "none";
+  document.getElementById("endGame").style.display = "none";
+
+}
+
+
 //Function that starts the game, sets display of landingPage to none
 //Function should include timer, when ending criteria is met, set display of gameBrief to none
 
@@ -99,19 +108,19 @@ const loadSaveState = JSON.parse(loadSaveStateString);
 
 let APIKEY = "ssS6qrhl6fvn3W4QEtQrYHXKJmdrveFI";
 
-function gify(state){
+function gify(state) {
 
 
   let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=1&q=` + state;
 
-    fetch(url)
-  .then(function (response) {
+  fetch(url)
+    .then(function (response) {
       return response.json();
-  })
-  .then (function (content) {
+    })
+    .then(function (content) {
       console.log(content);
-      document.getElementById("test1").src=content.data[0].images.downsized.url;
-  });
+      document.getElementById("test1").src = content.data[0].images.downsized.url;
+    });
 
 }
 gify('sweating')
@@ -120,3 +129,4 @@ gify('sweating')
 //Event Listeners will be listed below
 
 startBtn.addEventListener("click", callWordsAPI);
+endBtn.addEventListener("click", returnHome);
