@@ -1,52 +1,17 @@
 //Section for defining global variables
 
-var timerEl = document.getElementById('gameBrief');
+var startTimerEl = document.getElementById('startTimer');
 // var mainEl = document.getElementById('Time');
 // change or adder h2 header to add id = time
 var message = "10 words"
 var startBtn = document.getElementById("nicknameBtn");
 var endBtn = document.getElementById("returnHome");
 
+
+var debugBtn = document.getElementById("debugBtn");
+
 //Section for defining functions
-
-function countdown() {
-  var timeLeft = 10
-  var name = getElementById('nickName')
-
-  var timeInterval = setInterval(function () {
-    if (timeLeft > 1) {
-      timerEl.textContent = timeLeft + ' seconds remaining' + name;
-      timeLeft--;
-    } else if (timeLeft === 1) {
-      timerEl.textContent = timeLeft + ' second remaining' + name;
-      timeLeft--;
-    } else {
-
-      timerEl.textContent = '';
-      clearInterval(timeInterval);
-      displayMessage();
-      console.log(name)
-
-      //maybe look at timer ending in seperate function
-
-    }
-  }, 1000);
-}
-
-function displayMessage() { //Displaying the challenge words? Work off this code to display words. Don't need timer
-  var wordCount = 0;
-
-  var msgInterval = setInterval(function () {
-
-    if (words[wordCount] === undefined) {
-      clearInterval(msgInterval);
-    } else {
-      mainEl.textContent = words[wordCount];
-      wordCount++;
-    }
-  }, 3000);
-}
-
+  
 function callWordsAPI() {
 
   var wordsAPI = "https://random-words-api.herokuapp.com/w?n=10"; //Need to throw this call in beginning of gameStart function
@@ -61,7 +26,8 @@ function callWordsAPI() {
 };
 
 function gameStart(words) {
-
+ 
+  var startTimeLeft = 5;
   var guessWordsObj = []; //Creates a multidimensional array of guesswords with strings broken out into separate arrays
 
   for (i = 0; i < words.length; i++) {
@@ -75,6 +41,20 @@ function gameStart(words) {
   document.getElementById("inGame").style.display = "none";
   document.getElementById("endGame").style.display = "none";
 
+
+  document.getElementById("gameBrief").style.display = "flex";
+
+  var timeInterval = setInterval(function () {
+    
+    if (startTimeLeft > -1) {
+      startTimerEl.textContent = "Time to start: " + startTimeLeft ;
+      startTimeLeft--;
+    } else {
+      startTimerEl.textContent = '';  
+      clearInterval(timeInterval);  
+      typingGame(guessWordsObj);        
+    }
+  }, 1000);
 };
 
 function returnHome() {
@@ -82,11 +62,20 @@ function returnHome() {
   document.getElementById("inGame").style.display = "none";
   document.getElementById("endGame").style.display = "none";
 
-}
+};
 
+function typingGame(gameObjective) {
+  
+  document.getElementById("gameBrief").style.display = "none";
+  document.getElementById("inGame").style.display = "flex";
 
-//Function that starts the game, sets display of landingPage to none
-//Function should include timer, when ending criteria is met, set display of gameBrief to none
+  for(i=0 ; i < gameObjective.length ; i++) {
+    $("#guessingWords").innerHTML = gameObjective[i][0]
+    // $('#debugBtn').click(function() {
+    //   i = i + 1;
+    // })
+  }
+};
 
 //Function for gameEnd. Button will trigger the landingPage to display
 
