@@ -21,6 +21,7 @@ function callWordsAPI() {
     })
     .then(function (data) {
       gameStart(data)
+      console.log(data);
     });
 
 };
@@ -54,7 +55,25 @@ function gameStart(words) {
       clearInterval(timeInterval);  
       typingGame(guessWordsObj);        
     }
-  }, 1000);
+  }, 200);
+};
+
+
+function typingGame(gameObjective) {
+
+  document.getElementById("gameBrief").style.display = "none";
+  document.getElementById("inGame").style.display = "flex";
+
+  for(i=0 ; i < gameObjective.length ; i++) {
+    $("#guessingWords").text(gameObjective[i].join(""))  
+    console.log(gameObjective[i][0])
+
+  }
+
+  //Listen for key presses, when user presses key, run a comparison to word being displayed
+  //add event listener for key presses, check if key pressed matches target letter
+  //if yes, letter turns green.
+  //if letter count < word length, 
 };
 
 function returnHome() {
@@ -64,20 +83,6 @@ function returnHome() {
 
 };
 
-function typingGame(gameObjective) {
-  
-  document.getElementById("gameBrief").style.display = "none";
-  document.getElementById("inGame").style.display = "flex";
-
-  for(i=0 ; i < gameObjective.length ; i++) {
-    $("#guessingWords").innerHTML = gameObjective[i][0]
-    // $('#debugBtn').click(function() {
-    //   i = i + 1;
-    // })
-  }
-};
-
-//Function for gameEnd. Button will trigger the landingPage to display
 
 //Function for storing gameData locally
 
@@ -107,7 +112,7 @@ function gify(state) {
       return response.json();
     })
     .then(function (content) {
-      console.log(content);
+      
       document.getElementById("test1").src = content.data[0].images.downsized.url;
     });
 
