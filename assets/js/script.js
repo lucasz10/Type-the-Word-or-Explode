@@ -7,34 +7,30 @@ var message = "10 words"
 var startBtn = document.getElementById("nicknameBtn");
 var endBtn = document.getElementById("returnHome");
 
+
 var debugBtn = document.getElementById("debugBtn");
 
-function countdown() {
-  var timeLeft = 10
-  var name = getElementById('nickName')
-
 //Section for defining functions
-
   
 function callWordsAPI() {
 
   var wordsAPI = "https://random-words-api.herokuapp.com/w?n=10"; //Need to throw this call in beginning of gameStart function
   fetch(wordsAPI)
-  .then(function (response) {
+    .then(function (response) {
       return response.json();
-  })
-  .then (function (data) {
+    })
+    .then(function (data) {
       gameStart(data)
-  });
+    });
 
 };
 
 function gameStart(words) {
-  
+ 
   var startTimeLeft = 5;
   var guessWordsObj = []; //Creates a multidimensional array of guesswords with strings broken out into separate arrays
 
-  for(i = 0; i < words.length ; i++) {
+  for (i = 0; i < words.length; i++) {
     var guessWord = words[i].split("")
     guessWordsObj.push(guessWord);
   }
@@ -44,6 +40,7 @@ function gameStart(words) {
   document.getElementById("landingPage").style.display = "none";
   document.getElementById("inGame").style.display = "none";
   document.getElementById("endGame").style.display = "none";
+
 
   document.getElementById("gameBrief").style.display = "flex";
 
@@ -58,6 +55,12 @@ function gameStart(words) {
       typingGame(guessWordsObj);        
     }
   }, 1000);
+};
+
+function returnHome() {
+  document.getElementById("landingPage").style.display = "flex";
+  document.getElementById("inGame").style.display = "none";
+  document.getElementById("endGame").style.display = "none";
 
 };
 
@@ -73,8 +76,6 @@ function typingGame(gameObjective) {
     // })
   }
 };
-//Function that starts the game, sets display of landingPage to none
-//Function should include timer, when ending criteria is met, set display of gameBrief to none
 
 //Function for gameEnd. Button will trigger the landingPage to display
 

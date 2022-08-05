@@ -1,55 +1,56 @@
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.1/dist/css/uikit.min.css"/>
-        <link rel="stylesheet" type="text/css" href="./assets/css/styles.css"/>
-        <title>Type Words to Explode</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.1/dist/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/styles.css" />
+    <title>Type Words to Explode</title>
+</head>
 
-    <body>
-        <div id="landingPage">
-            <header class="uk-flex uk-flex-column">
-                <h1 class="uk-heading-medium uk-align-center uk-margin-small"> There's no time to Explain!</h1>
-                <h2 class="uk-heading-small uk-align-center uk-margin-small"> Type the words or you explode!</h2>
-                <p class="uk-align-center">
-                    The objective of the game is to type ten randomly
-                    generated words as quickly and correctly as you can!
-                    <br>
-                    Keep in mind, one false keystroke, and it will end in disaster!
-                    You're our last hope!
-                </p>
-            </header>
+<body>
+    <div id="landingPage">
+        <header class="uk-flex uk-flex-column">
+            <h1 class="uk-heading-medium uk-align-center uk-margin-small"> There's no time to Explain!</h1>
+            <h2 class="uk-heading-small uk-align-center uk-margin-small"> Type the words or you explode!</h2>
+            <p class="uk-align-center">
+                The objective of the game is to type ten randomly
+                generated words as quickly and correctly as you can!
+                <br>
+                Keep in mind, one false keystroke, and it will end in disaster!
+                You're our last hope!
+            </p>
+        </header>
 
-            <div class="uk-flex uk-flex-column" id="startPoint">
-                <h3 class="uk-align-center uk-margin-small"> Enter your name to start: </h3>
-                <input class="uk-input uk-align-center uk-margin-small uk-form-large uk-form-width-medium" id="nickname"></input>
-                <button class="uk-align-center uk-button-danger uk-button-large uk-margin-small" id="nicknameBtn">Begin!</button>
-            </div>
-
-            <div class="uk-flex uk-flex-column uk-width-large uk-align-center" id="scoreBoard">
-                <h3 class="uk-align-center uk-margin-small">Local Scores:</h3>
-                <table class="uk-table uk-table-divider ">
-                    <thead>
-                        <tr>
-                            <th>Local Names</th>
-                            <th>Words</th>
-                            <th>Time Left</th>
-                        </tr>
-                    </thead>
-                    <tbody id="scoreboardInput">
-                        <tr>
-                            <td>Some Name</td>
-                            <td>Some Words</td>
-                            <td>Some time</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="uk-flex uk-flex-column" id="startPoint">
+            <h3 class="uk-align-center uk-margin-small"> Enter your name to start: </h3>
+            <input class="uk-input uk-align-center uk-margin-small uk-form-large uk-form-width-medium"
+                id="nickname"></input>
+            <button class="uk-align-center uk-button-danger uk-button-large uk-margin-small"
+                id="nicknameBtn">Begin!</button>
         </div>
 
+        <div class="uk-flex uk-flex-column uk-width-large uk-align-center" id="scoreBoard">
+            <h3 class="uk-align-center uk-margin-small">Local Scores:</h3>
+            <table class="uk-table uk-table-divider ">
+                <thead>
+                    <tr>
+                        <th>Local Names</th>
+                        <th>Words</th>
+                        <th>Time Left</th>
+                    </tr>
+                </thead>
+                <tbody id="scoreboardInput">
+                    <tr>
+                        <td>Some Name</td>
+                        <td>Some Words</td>
+                        <td>Some time</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
         <div class="uk-flex uk-flex-column" id="gameBrief">
             <h2 class="uk-align-center uk-margin-small">Get Ready! The Game is Starting!</h2>
@@ -65,15 +66,15 @@
             <button class="uk-align-center uk-button-primary uk-button-large uk-margin-small" id="debugBtn">Return Home</button>
         </div>
 
-        <div class="uk-flex uk-flex-column" id="endGame">
-            <h2 class="uk-align-center uk-margin-small">text for completion(user)!</h2>
-            <img src="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
-                alt="placeHolder img" width="300" height="200" class="uk-align-center uk-margin-small">
-            <button class="uk-align-center uk-button-primary uk-button-large uk-margin-small" id="returnHome">Return Home</button>
-        </div>
+    <div class="uk-flex uk-flex-column" id="endGame">
+        <h2 class="uk-align-center uk-margin-small">text for completion(user)!</h2>
+        <img src="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
+            alt="placeHolder img" width="300" height="200" class="uk-align-center uk-margin-small">
+        <button class="uk-align-center uk-button-primary uk-button-large uk-margin-small" id="returnHome">Return
+            Home</button>
+    </div>
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="assets/js/script.js"></script>
     </body>
-
 </html>
