@@ -1,7 +1,13 @@
+//Section for defining global variables
+
 var timerEl = document.getElementById('gameBrief');
 // var mainEl = document.getElementById('Time');
 // change or adder h2 header to add id = time
 var message = "10 words"
+var startBtn = document.getElementById("nicknameBtn");
+
+
+//Section for defining functions
 
 function countdown() {
     var timeLeft = 10
@@ -41,24 +47,39 @@ function displayMessage() { //Displaying the challenge words? Work off this code
     }, 3000);
  }
 
-element.addEventListener("click", countdown);
+function callWordsAPI() {
 
-//Look at functions to include a change display of various sections on and off
-//Jquery setAttribute() might help here significantly
+  var wordsAPI = "https://random-words-api.herokuapp.com/w?n=10"; //Need to throw this call in beginning of gameStart function
+  fetch(wordsAPI)
+  .then(function (response) {
+      return response.json();
+  })
+  .then (function (data) {
+      gameStart(data)
+  });
 
- function landPage() {
+};
 
-    var lander = getElementById('landingPage')
- }
+function gameStart(words) {
+  
+  var guessWordsObj = []; //Creates a multidimensional array of guesswords with strings broken out into separate arrays
 
-var wordsAPI = "https://random-words-api.herokuapp.com/w?n=10"; //Need to throw this call in beginning of gameStart function
-fetch(wordsAPI)
-.then(function (response) {
-    return response.json();
-})
-.then (function (data) {
-    console.log(data);
-});
+  for(i = 0; i < words.length ; i++) {
+    var guessWord = words[i].split("")
+    guessWordsObj.push(guessWord);
+  }
+
+  console.log(guessWordsObj);
+
+  document.getElementById("landingPage").style.display = "none";
+  document.getElementById("inGame").style.display = "none";
+  document.getElementById("endGame").style.display = "none";
+
+
+};
+
+
+
 
 //Function that starts the game, sets display of landingPage to none
 //Function should include timer, when ending criteria is met, set display of gameBrief to none
@@ -70,4 +91,6 @@ fetch(wordsAPI)
 //Function for calling Giphy api, may be able to include in active game function
 
 
-//Add eventListeners for return button and start button
+//Event Listeners will be listed below
+
+startBtn.addEventListener("click", callWordsAPI);
