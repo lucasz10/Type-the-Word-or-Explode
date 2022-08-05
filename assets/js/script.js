@@ -58,12 +58,6 @@ function gameStart(words) {
   }, 200);
 };
 
-function returnHome() {
-  document.getElementById("landingPage").style.display = "flex";
-  document.getElementById("inGame").style.display = "none";
-  document.getElementById("endGame").style.display = "none";
-
-};
 
 function typingGame(gameObjective) {
 
@@ -82,7 +76,13 @@ function typingGame(gameObjective) {
   //if letter count < word length, 
 };
 
-//Function for gameEnd. Button will trigger the landingPage to display
+function returnHome() {
+  document.getElementById("landingPage").style.display = "flex";
+  document.getElementById("inGame").style.display = "none";
+  document.getElementById("endGame").style.display = "none";
+
+};
+
 
 //Function for storing gameData locally
 
