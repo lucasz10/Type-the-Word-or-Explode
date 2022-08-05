@@ -75,12 +75,7 @@ function gameStart(words) {
   document.getElementById("inGame").style.display = "none";
   document.getElementById("endGame").style.display = "none";
 
-
 };
-
-
-
-
 //Function that starts the game, sets display of landingPage to none
 //Function should include timer, when ending criteria is met, set display of gameBrief to none
 
@@ -88,8 +83,39 @@ function gameStart(words) {
 
 //Function for storing gameData locally
 
+const saveState = {
+  charName: 'nickName',
+  results: 'endResults',
+  words: "words",
+};
+
+const saveStateString = JSON.stringify(saveState);
+localStorage.setItem('saveState', saveStateString);
+
+const loadSaveStateString = localStorage.getItem('saveState');
+const loadSaveState = JSON.parse(loadSaveStateString);
+
 //Function for calling Giphy api, may be able to include in active game function
 
+let APIKEY = "ssS6qrhl6fvn3W4QEtQrYHXKJmdrveFI";
+
+function gify(state){
+
+
+  let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=1&q=` + state;
+
+    fetch(url)
+  .then(function (response) {
+      return response.json();
+  })
+  .then (function (content) {
+      console.log(content);
+      document.getElementById("test1").src=content.data[0].images.downsized.url;
+  });
+
+}
+gify('sweating')
+//Add eventListeners for return button and start button
 
 //Event Listeners will be listed below
 
