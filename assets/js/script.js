@@ -1,14 +1,11 @@
 //Section for defining global variables
 
 var startTimerEl = document.getElementById('startTimer');
-// var mainEl = document.getElementById('Time');
-// change or adder h2 header to add id = time
-var message = "10 words"
+var timeLeft;
 var startBtn = document.getElementById("nicknameBtn");
 var endBtn = document.getElementById("returnHome");
-
-
 var debugBtn = document.getElementById("debugBtn");
+
 
 //Section for defining functions
   
@@ -36,11 +33,8 @@ function gameStart(words) {
     guessWordsObj.push(guessWord);
   }
 
+  gify('sweating' , 'startingGif');
   document.getElementById("landingPage").style.display = "none";
-  document.getElementById("inGame").style.display = "none";
-  document.getElementById("endGame").style.display = "none";
-
-
   document.getElementById("gameBrief").style.display = "flex";
 
   var timeInterval = setInterval(function () {
@@ -53,7 +47,7 @@ function gameStart(words) {
       clearInterval(timeInterval);  
       typingGame(guessWordsObj);        
     }
-  }, 200);
+  }, 1000);
 };
 
 
@@ -64,38 +58,79 @@ function typingGame(gameObjective) {
   
   var i = 0;
   var j = 0;
+  var successfulText = "";
+
+  var timeLeft = 20;
+
+  var timeInterval = setInterval(function () {
+    
+    if (timeLeft > -1) {
+      $('#inGameTimer').text("Time Left: " + timeLeft)
+      timeLeft--;
+    } else {
+      $('#inGameTimer').text("");  
+      clearInterval(timeInterval);
+      
+      $(document).off();
+      gify('explosion' , 'endingGif');
+      $('#endingText').text("You failed! You buffoon!");
+      gameEnd();       
+    }
+  }, 1000);
 
   $('#guessingWords').text(gameObjective[i].join(""));
-  console.log(gameObjective);
+  
   $(document).keypress(function(){
       
       event.preventDefault();
-      console.log(event.key);
-
+      
       if(event.key == gameObjective[i][j]) {
+        successfulText += gameObjective[i][j];
+        $('#typedWord').text(successfulText)
+        
         j++;
-             
+        
         if(j == gameObjective[i].length){
           i++;
+          $('#typedWord').text("")
+          successfulText = "";
+
           if(i < gameObjective.length){
             $('#guessingWords').text(gameObjective[i].join(""));
             j = 0;
           } else {
             $(document).off();
-            returnHome();
+            gify('celebration' , 'endingGif');
+            $('#endingText').text("I can't believe you actually pulled it off.");
+            $('#inGameTimer').text("");
+            clearInterval(timeInterval);
+            gameEnd();
           };
         }
         
       } else if(event.key !== gameObjective[i][j]){
         $(document).off();
-        returnHome();
+        gify('explosion' , 'endingGif');
+        $('#endingText').text("You failed! You buffoon!");
+        $('#inGameTimer').text("");
+        clearInterval(timeInterval);
+        gameEnd();
+        
       }  
     });
 };
 
-function returnHome() {
-  document.getElementById("landingPage").style.display = "flex";
+function gameEnd() {
+
   document.getElementById("inGame").style.display = "none";
+  document.getElementById("endGame").style.display = "flex";
+
+}
+
+function returnHome() {
+
+  document.getElementById("landingPage").style.display = "flex";
+  document.getElementById("landingPage").style.flexDirection = "column";
   document.getElementById("endGame").style.display = "none";
 
 };
@@ -119,7 +154,7 @@ const loadSaveState = JSON.parse(loadSaveStateString);
 
 let APIKEY = "ssS6qrhl6fvn3W4QEtQrYHXKJmdrveFI";
 
-function gify(state) {
+function gify(state , location) {
 
 
   let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=1&q=` + state;
@@ -130,11 +165,11 @@ function gify(state) {
     })
     .then(function (content) {
       
-      document.getElementById("test1").src = content.data[0].images.downsized.url;
+      document.getElementById(location).src = content.data[0].images.downsized.url;
     });
 
 }
-gify('sweating')
+
 //Add eventListeners for return button and start button
 
 //Event Listeners will be listed below
