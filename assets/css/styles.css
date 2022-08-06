@@ -3,3 +3,7 @@
 #endGame {
     display: none;
 }
+
+#typedWord {
+    color: green;
+}
