@@ -36,8 +36,6 @@ function gameStart(words) {
     guessWordsObj.push(guessWord);
   }
 
-  console.log(guessWordsObj);
-
   document.getElementById("landingPage").style.display = "none";
   document.getElementById("inGame").style.display = "none";
   document.getElementById("endGame").style.display = "none";
@@ -63,17 +61,36 @@ function typingGame(gameObjective) {
 
   document.getElementById("gameBrief").style.display = "none";
   document.getElementById("inGame").style.display = "flex";
+  
+  var i = 0;
+  var j = 0;
 
-  for(i=0 ; i < gameObjective.length ; i++) {
-    $("#guessingWords").text(gameObjective[i].join(""))  
-    console.log(gameObjective[i][0])
+  $('#guessingWords').text(gameObjective[i].join(""));
+  console.log(gameObjective);
+  $(document).keypress(function(){
+      
+      event.preventDefault();
+      console.log(event.key);
 
-  }
-
-  //Listen for key presses, when user presses key, run a comparison to word being displayed
-  //add event listener for key presses, check if key pressed matches target letter
-  //if yes, letter turns green.
-  //if letter count < word length, 
+      if(event.key == gameObjective[i][j]) {
+        j++;
+             
+        if(j == gameObjective[i].length){
+          i++;
+          if(i < gameObjective.length){
+            $('#guessingWords').text(gameObjective[i].join(""));
+            j = 0;
+          } else {
+            $(document).off();
+            returnHome();
+          };
+        }
+        
+      } else if(event.key !== gameObjective[i][j]){
+        $(document).off();
+        returnHome();
+      }  
+    });
 };
 
 function returnHome() {
@@ -124,3 +141,4 @@ gify('sweating')
 
 startBtn.addEventListener("click", callWordsAPI);
 endBtn.addEventListener("click", returnHome);
+
