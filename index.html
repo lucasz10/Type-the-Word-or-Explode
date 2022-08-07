@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -37,42 +38,45 @@
                 <thead>
                     <tr>
                         <th>Local Names</th>
-                        <th>Words</th>
                         <th>Time Left</th>
+                        <th>Correct Words</th>
                     </tr>
                 </thead>
                 <tbody id="scoreboardInput">
 
                 </tbody>
             </table>
+            
         </div>
     </div>
 
     <div class="uk-flex uk-flex-column" id="gameBrief">
-        <h2 id = "startingText" class="uk-align-center uk-margin-small"></h2>
+        <h2 id="startingText" class="uk-align-center uk-margin-small"></h2>
         <img id="startingGif" src="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
-            alt="placeHolder img" width="300" height="200" class="uk-align-center uk-margin-small">
+            alt = "placeHolder img" width="300" height="200" class="uk-align-center uk-margin-small">
         <h3 class="uk-align-center uk-margin-small" id="startTimer"></h3>
     </div>
 
     <div class="uk-flex uk-flex-column" id="inGame">
         <h2 class="uk-align-center uk-margin-small uk-margin-top-large">Hurry! You need to go faster!</h2>
         <h1 id="guessingWords" class="uk-align-center uk-margin-small"></h1>
-        <h1 id = "typedWord" class="uk-align-center uk-margin-small"></h1>
-        <h3 id = "inGameTimer" class="uk-align-center uk-margin-small">Time Left XX</h3>
+        <h1 id="typedWord" class="uk-align-center uk-margin-small"></h1>
+        <h3 id="inGameTimer" class="uk-align-center uk-margin-small">Time Left XX</h3>
     </div>
 
     <div class="uk-flex uk-flex-column" id="endGame">
-        <h2 id = "endingText" class = "uk-align-center uk-margin-small"></h2>
-        <img id = "endingGif" src = "https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
-            alt = "placeHolder img" width="300" height="200" class="uk-align-center uk-margin-small"> 
-        <h3 id = "userTimeLeft" class = "uk-align-center uk-margin-medium"></h3>
-        <h3 id = "userCorrectWords" class = "uk-align-center uk-margin-medium"></h3>
+        <h2 id="endingText" class="uk-align-center uk-margin-small"></h2>
+        <img id="endingGif" src="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
+            alt="placeHolder img" width="300" height="200" class="uk-align-center uk-margin-small"> 
+        <h3 id="userTimeLeft" class="uk-align-center uk-margin-medium"></h3>
+        <h3 id="userCorrectWords" class = "uk-align-center uk-margin-medium"></h3>
         <button class="uk-align-center uk-button-primary uk-button-large uk-margin-small" id="returnHome">Return
             Home</button>
     </div>
 
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.1/dist/js/uikit.min.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
 
