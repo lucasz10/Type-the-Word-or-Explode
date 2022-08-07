@@ -7,7 +7,9 @@ var endBtn = document.getElementById("returnHome");
 
 var userName;
 
-var gameHistory = JSON.parse(localStorage.getItem('gameHistory')) || [];
+var nameHistory = JSON.parse(localStorage.getItem('nameHistory')) || [];
+var wordHistory = JSON.parse(localStorage.getItem('wordHistory')) || [];
+var timeHistory = JSON.parse(localStorage.getItem('timeHistory')) || [];
 
 //Section for defining functions
   
@@ -24,6 +26,8 @@ function callWordsAPI() {
     });
 
 };
+
+//Function prepares the game by calling the words api and storing it. Handles the "gameBrief" element in the HTML document
 
 function gameStart(words) {
 
@@ -60,6 +64,8 @@ function gameStart(words) {
   }, 1000);
 };
 
+//Function contains all elements of the game. Provides checks for failure and success
+//also manages the words displaying on the screen while in game
 
 function typingGame(gameObjective) {
 
@@ -135,24 +141,24 @@ function typingGame(gameObjective) {
     });
 };
 
+//Function stores user data locally
+
 function gameEnd(userName , userWords , userTime) {
 
   document.getElementById("inGame").style.display = "none";
   document.getElementById("endGame").style.display = "flex";
 
   $('#userTimeLeft').text("Time Left: " + userTime);
-  $('#userCorrectWords').text("Correct Words: " + userWords);
+  $('#userCorrectWords').text("Correct Words: " + userWords); 
+  
+  nameHistory.unshift(userName);
+  timeHistory.unshift(userTime);
+  wordHistory.unshift(userWords);
 
-  var recentGame = {
-    charName: userName,
-    words: userWords,
-    time: userTime,
-  };
-  
-  gameHistory.push(recentGame);
-  localStorage.setItem('gameHistory', JSON.stringify(recentGame));
-  
-console.log(gameHistory);
+  localStorage.setItem('nameHistory', JSON.stringify(nameHistory));
+  localStorage.setItem('timeHistory', JSON.stringify(timeHistory));
+  localStorage.setItem('wordHistory', JSON.stringify(wordHistory));
+
 
 
 }
@@ -168,18 +174,24 @@ function returnHome() {
 };
 
 
-//Function for storing gameData locally
+//Function for storing gameData locally and Adjusting score table on landing page
 
 function getGameHistory() {
 
-  $('#scoreBoardInput').empty(); //Clears history before reinserting
+  $('#scoreboardInput').empty(); //Clears history before reinserting
+  $('#wordStorage').empty();
   
-  if(gameHistory.length > 5){ //Limits history to 5 unique items
-      gameHistory.pop();
+  if(nameHistory.length > 5){ //Limits history to 5 unique items
+      nameHistory.pop();
+      wordHistory.pop();
+      timeHistory.pop();
   };
 
-  for(let i = 0; i < gameHistory.length; i++) {
-      $('#scoreboardInput').append("<tr><td>" + gameHistory[i].charName + "</td><td>" + gameHistory[i].words + "</td><td>" + gameHistory[i].time + "</td></tr>");
+  
+  for(let i = 0; i < nameHistory.length; i++) {
+
+      $('#scoreboardInput').append("<tr><td>" + nameHistory[i] + "</td><td>" + timeHistory[i] + "</td><td class='uk-flex'><button class='uk-button uk-button-default' type='button'>"+ wordHistory[i].length + "</button><div uk-dropdown>" + wordHistory[i] + "</div></td></tr>");
+    
   }
 };
 
@@ -207,7 +219,7 @@ function gify(state , location) {
 
 getGameHistory();
 
-console.log(gameHistory)
+
 
 //Add eventListeners for return button and start button
 
