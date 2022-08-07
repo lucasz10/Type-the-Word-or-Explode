@@ -4,8 +4,10 @@ var startTimerEl = document.getElementById('startTimer');
 var timeLeft;
 var startBtn = document.getElementById("nicknameBtn");
 var endBtn = document.getElementById("returnHome");
-var debugBtn = document.getElementById("debugBtn");
 
+var userName;
+
+var gameHistory = JSON.parse(localStorage.getItem('gameHistory')) || [];
 
 //Section for defining functions
   
@@ -24,6 +26,14 @@ function callWordsAPI() {
 };
 
 function gameStart(words) {
+
+  userName = document.getElementById('nickname').value;
+  $('#nickname').val("");
+  if(userName == 'Logan Garland') {
+    $('#startingText').text("Giphy is pronounced with a HARD G, Logan. We've lost already.")
+  } else {
+    $('#startingText').text("Get ready, " + userName + "! It's about to begin!");
+  }
  
   var startTimeLeft = 5;
   var guessWordsObj = []; //Creates a multidimensional array of guesswords with strings broken out into separate arrays
@@ -59,6 +69,7 @@ function typingGame(gameObjective) {
   var i = 0;
   var j = 0;
   var successfulText = "";
+  var correctWords = [];
 
   var timeLeft = 20;
 
@@ -74,7 +85,7 @@ function typingGame(gameObjective) {
       $(document).off();
       gify('explosion' , 'endingGif');
       $('#endingText').text("You failed! You buffoon!");
-      gameEnd();       
+      gameEnd(userName , correctWords , timeLeft);       
     }
   }, 1000);
 
@@ -91,6 +102,9 @@ function typingGame(gameObjective) {
         j++;
         
         if(j == gameObjective[i].length){
+
+          correctWords.unshift(successfulText);
+
           i++;
           $('#typedWord').text("")
           successfulText = "";
@@ -104,26 +118,42 @@ function typingGame(gameObjective) {
             $('#endingText').text("I can't believe you actually pulled it off.");
             $('#inGameTimer').text("");
             clearInterval(timeInterval);
-            gameEnd();
+            gameEnd(userName , correctWords , timeLeft);
           };
         }
         
       } else if(event.key !== gameObjective[i][j]){
         $(document).off();
+        $('#typedWord').text("");
+
         gify('explosion' , 'endingGif');
         $('#endingText').text("You failed! You buffoon!");
         $('#inGameTimer').text("");
         clearInterval(timeInterval);
-        gameEnd();
-        
+        gameEnd(userName , correctWords , timeLeft);  
       }  
     });
 };
 
-function gameEnd() {
+function gameEnd(userName , userWords , userTime) {
 
   document.getElementById("inGame").style.display = "none";
   document.getElementById("endGame").style.display = "flex";
+
+  $('#userTimeLeft').text("Time Left: " + userTime);
+  $('#userCorrectWords').text("Correct Words: " + userWords);
+
+  var recentGame = {
+    charName: userName,
+    words: userWords,
+    time: userTime,
+  };
+  
+  gameHistory.push(recentGame);
+  localStorage.setItem('gameHistory', JSON.stringify(recentGame));
+  
+console.log(gameHistory);
+
 
 }
 
@@ -133,22 +163,27 @@ function returnHome() {
   document.getElementById("landingPage").style.flexDirection = "column";
   document.getElementById("endGame").style.display = "none";
 
+  getGameHistory();
+
 };
 
 
 //Function for storing gameData locally
 
-const saveState = {
-  charName: 'nickName',
-  results: 'endResults',
-  words: "words",
+function getGameHistory() {
+
+  $('#scoreBoardInput').empty(); //Clears history before reinserting
+  
+  if(gameHistory.length > 5){ //Limits history to 5 unique items
+      gameHistory.pop();
+  };
+
+  for(let i = 0; i < gameHistory.length; i++) {
+      $('#scoreboardInput').append("<tr><td>" + gameHistory[i].charName + "</td><td>" + gameHistory[i].words + "</td><td>" + gameHistory[i].time + "</td></tr>");
+  }
 };
 
-const saveStateString = JSON.stringify(saveState);
-localStorage.setItem('saveState', saveStateString);
 
-const loadSaveStateString = localStorage.getItem('saveState');
-const loadSaveState = JSON.parse(loadSaveStateString);
 
 //Function for calling Giphy api, may be able to include in active game function
 
@@ -169,6 +204,10 @@ function gify(state , location) {
     });
 
 }
+
+getGameHistory();
+
+console.log(gameHistory)
 
 //Add eventListeners for return button and start button
 
