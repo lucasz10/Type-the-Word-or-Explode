@@ -1,12 +1,5 @@
 # Type-the-Word-or-Explode
 
-## Your Task
-
-Third-party APIs allow developers to access their data and functionality by making requests with specific parameters to a URL. Developers are often tasked with retrieving data from another application's API and using it in the context of their own. Your challenge is to build a game that will run in the browser and feature dynamically updated HTML and CSS.
-
-Use 2 different API's in the functionality of the game. Use different CSS Framework other than Bootstrap. Read through the documentation for setup and usage instructions. You will use 'localStorage' to store any persistent data. 
-
-
 ## User Story
 
 ```
@@ -29,6 +22,13 @@ WHEN the game is completed
 THEN I am presented with the results
 WHEN I click on return home button
 THEN I am presnted with the player data from previous games and can start a new game
+```
+
+## Summary
+
+```
+The game will allow users to input their username and be able to see their results upon completion of the game.
+Durning the start of the game the user will be moved to a ready screen to prepare. Once in the game the user will have 20 seconds to type 10 words as fast as they can to beat the game. Once the game is completed the user will be able to return to the home screen and see their previous entries and results (time left, right words and user). Depending on the results the user will be presented with a Gif referencing the overall pass or fail of game.
 ```
 
 ## Mock-Up
