@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <!--landingPage describes the typing game -->
     <div id="landingPage">
         <header class="uk-flex uk-flex-column">
             <h1 class="uk-heading-medium uk-align-center uk-margin-small"> There's no time to Explain!</h1>
@@ -23,7 +24,7 @@
                 You're our last hope!
             </p>
         </header>
-
+        <!--startPoint page has the user enter a name to start typing game and will display scores of other players-->
         <div class="uk-flex uk-flex-column" id="startPoint">
             <h3 class="uk-align-center uk-margin-small"> Enter your name to start: </h3>
             <input class="uk-input uk-align-center uk-margin-small uk-form-large uk-form-width-medium"
@@ -46,30 +47,32 @@
 
                 </tbody>
             </table>
-            
+
         </div>
     </div>
-
+    <!--gameBrief will allow user the have time to get ready to type bfore the gae starts-->
     <div class="uk-flex uk-flex-column" id="gameBrief">
         <h2 id="startingText" class="uk-align-center uk-margin-small"></h2>
-        <img id="startingGif" src="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
-            alt = "placeHolder img" width="300" height="200" class="uk-align-center uk-margin-small">
+        <img id="startingGif"
+            src="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
+            alt="placeHolder img" width="300" height="200" class="uk-align-center uk-margin-small">
         <h3 class="uk-align-center uk-margin-small" id="startTimer"></h3>
     </div>
-
+    <!--inGame page will have a timed typing game -->
     <div class="uk-flex uk-flex-column" id="inGame">
         <h2 class="uk-align-center uk-margin-small uk-margin-top-large">Hurry! You need to go faster!</h2>
         <h1 id="guessingWords" class="uk-align-center uk-margin-small"></h1>
         <h1 id="typedWord" class="uk-align-center uk-margin-small"></h1>
         <h3 id="inGameTimer" class="uk-align-center uk-margin-small">Time Left XX</h3>
     </div>
-
+    <!--EndGame page will show gifys for winners and losers. it will also show time and score-->
     <div class="uk-flex uk-flex-column" id="endGame">
         <h2 id="endingText" class="uk-align-center uk-margin-small"></h2>
-        <img id="endingGif" src="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
-            alt="placeHolder img" width="300" height="200" class="uk-align-center uk-margin-small"> 
+        <img id="endingGif"
+            src="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
+            alt="placeHolder img" width="300" height="200" class="uk-align-center uk-margin-small">
         <h3 id="userTimeLeft" class="uk-align-center uk-margin-medium"></h3>
-        <h3 id="userCorrectWords" class = "uk-align-center uk-margin-medium"></h3>
+        <h3 id="userCorrectWords" class="uk-align-center uk-margin-medium"></h3>
         <button class="uk-align-center uk-button-primary uk-button-large uk-margin-small" id="returnHome">Return
             Home</button>
     </div>

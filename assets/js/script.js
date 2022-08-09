@@ -12,17 +12,16 @@ var wordHistory = JSON.parse(localStorage.getItem('wordHistory')) || [];
 var timeHistory = JSON.parse(localStorage.getItem('timeHistory')) || [];
 
 //Section for defining functions
-  
+
 function callWordsAPI() {
 
-  var wordsAPI = "https://random-words-api.herokuapp.com/w?n=10"; //Need to throw this call in beginning of gameStart function
+  var wordsAPI = "https://random-words-api.herokuapp.com/w?n=10"; // calling on the the API for words
   fetch(wordsAPI)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
       gameStart(data)
-      console.log(data);
     });
 
 };
@@ -30,36 +29,36 @@ function callWordsAPI() {
 //Function prepares the game by calling the words api and storing it. Handles the "gameBrief" element in the HTML document
 
 function gameStart(words) {
-
-  userName = document.getElementById('nickname').value;
-  $('#nickname').val("");
-  if(userName == 'Logan Garland') {
-    $('#startingText').text("Giphy is pronounced with a HARD G, Logan. We've lost already.")
-  } else {
-    $('#startingText').text("Get ready, " + userName + "! It's about to begin!");
-  }
- 
   var startTimeLeft = 5;
   var guessWordsObj = []; //Creates a multidimensional array of guesswords with strings broken out into separate arrays
 
-  for (i = 0; i < words.length; i++) {
+  userName = document.getElementById('nickname').value;//alowing user to enter their nickname for game.
+  $('#nickname').val("");
+  if (userName == 'Logan Garland') {
+    $('#startingText').text("Giphy is pronounced with a HARD G, Logan. We've lost already.")//Easter egg when the name Logan Garland is typed in
+  } else {
+    $('#startingText').text("Get ready, " + userName + "! It's about to begin!");//Displays text. Get ready "userName"
+  }
+
+
+  for (i = 0; i < words.length; i++) {  //
     var guessWord = words[i].split("")
     guessWordsObj.push(guessWord);
   }
 
-  gify('sweating' , 'startingGif');
+  gify('sweating', 'startingGif');
   document.getElementById("landingPage").style.display = "none";
-  document.getElementById("gameBrief").style.display = "flex";
+  document.getElementById("gameBrief").style.display = "flex"; //Displays sweating gify in the gameBrief page
 
   var timeInterval = setInterval(function () {
-    
+
     if (startTimeLeft > -1) {
-      startTimerEl.textContent = "Time to start: " + startTimeLeft ;
+      startTimerEl.textContent = "Time to start: " + startTimeLeft; // when timer count down finished  text will display "Time to start"
       startTimeLeft--;
     } else {
-      startTimerEl.textContent = '';  
-      clearInterval(timeInterval);  
-      typingGame(guessWordsObj);        
+      startTimerEl.textContent = '';
+      clearInterval(timeInterval);  //clearing the timeIterval
+      typingGame(guessWordsObj);  //Words to type      
     }
   }, 1000);
 };
@@ -70,87 +69,87 @@ function gameStart(words) {
 function typingGame(gameObjective) {
 
   document.getElementById("gameBrief").style.display = "none";
-  document.getElementById("inGame").style.display = "flex";
-  
+  document.getElementById("inGame").style.display = "flex"; // will only display inGmae page 
+
   var i = 0;
   var j = 0;
   var successfulText = "";
   var correctWords = [];
 
-  var timeLeft = 20;
+  var timeLeft = 20; //time durning in game
 
   var timeInterval = setInterval(function () {
-    
+
     if (timeLeft > -1) {
-      $('#inGameTimer').text("Time Left: " + timeLeft)
+      $('#inGameTimer').text("Time Left: " + timeLeft)// displays time left in game
       timeLeft--;
     } else {
-      $('#inGameTimer').text("");  
-      clearInterval(timeInterval);
-      
+      $('#inGameTimer').text("");
+      clearInterval(timeInterval);// clears the in game timer 
+
       $(document).off();
-      gify('explosion' , 'endingGif');
-      $('#endingText').text("You failed! You buffoon!");
-      gameEnd(userName , correctWords , timeLeft);       
+      gify('explosion', 'endingGif');
+      $('#endingText').text("You failed! You buffoon!"); //Displays the fail gify and the fail text
+      gameEnd(userName, correctWords, timeLeft);  //End game score     
     }
   }, 1000);
 
   $('#guessingWords').text(gameObjective[i].join(""));
-  
-  $(document).keypress(function(){
-      
-      event.preventDefault();
-      
-      if(event.key == gameObjective[i][j]) {
-        successfulText += gameObjective[i][j];
-        $('#typedWord').text(successfulText)
-        
-        j++;
-        
-        if(j == gameObjective[i].length){
 
-          correctWords.unshift(successfulText);
+  $(document).keypress(function () { //this will take the users keypress input
 
-          i++;
-          $('#typedWord').text("")
-          successfulText = "";
+    event.preventDefault();
 
-          if(i < gameObjective.length){
-            $('#guessingWords').text(gameObjective[i].join(""));
-            j = 0;
-          } else {
-            $(document).off();
-            gify('celebration' , 'endingGif');
-            $('#endingText').text("I can't believe you actually pulled it off.");
-            $('#inGameTimer').text("");
-            clearInterval(timeInterval);
-            gameEnd(userName , correctWords , timeLeft);
-          };
-        }
-        
-      } else if(event.key !== gameObjective[i][j]){
-        $(document).off();
-        $('#typedWord').text("");
+    if (event.key == gameObjective[i][j]) {
+      successfulText += gameObjective[i][j];//checking the key press to see if its the correct key that needs to be pressed
+      $('#typedWord').text(successfulText)
 
-        gify('explosion' , 'endingGif');
-        $('#endingText').text("You failed! You buffoon!");
-        $('#inGameTimer').text("");
-        clearInterval(timeInterval);
-        gameEnd(userName , correctWords , timeLeft);  
-      }  
-    });
+      j++;
+
+      if (j == gameObjective[i].length) {
+
+        correctWords.unshift(successfulText);
+
+        i++;
+        $('#typedWord').text("")
+        successfulText = "";
+
+        if (i < gameObjective.length) {
+          $('#guessingWords').text(gameObjective[i].join(""));
+          j = 0;
+        } else {
+          $(document).off();
+          gify('celebration', 'endingGif'); // celebration gify dispays when finished successfully
+          $('#endingText').text("I can't believe you actually pulled it off.");// when successfully finished game text will diplay "i cant belive you actually pulled it off"
+          $('#inGameTimer').text("");
+          clearInterval(timeInterval); //clears the timer 
+          gameEnd(userName, correctWords, timeLeft); //Displays score 
+        };
+      }
+
+    } else if (event.key !== gameObjective[i][j]) {
+      $(document).off();
+      $('#typedWord').text("");
+
+      gify('explosion', 'endingGif'); //fail gify will display an eplosion 
+      $('#endingText').text("You failed! You buffoon!");// fail text will display "you failed! You buffoon!"
+      $('#inGameTimer').text("");
+      clearInterval(timeInterval);// clears timer 
+      gameEnd(userName, correctWords, timeLeft);  // Displays gameEnd score 
+    }
+  });
 };
 
 //Function stores user data locally
 
-function gameEnd(userName , userWords , userTime) {
+function gameEnd(userName, userWords, userTime) {
 
   document.getElementById("inGame").style.display = "none";
   document.getElementById("endGame").style.display = "flex";
 
   $('#userTimeLeft').text("Time Left: " + userTime);
-  $('#userCorrectWords').text("Correct Words: " + userWords); 
-  
+  $('#userCorrectWords').text("Correct Words: " + userWords);
+
   nameHistory.unshift(userName);
   timeHistory.unshift(userTime);
   wordHistory.unshift(userWords);
@@ -180,18 +179,18 @@ function getGameHistory() {
 
   $('#scoreboardInput').empty(); //Clears history before reinserting
   $('#wordStorage').empty();
-  
-  if(nameHistory.length > 5){ //Limits history to 5 unique items
-      nameHistory.pop();
-      wordHistory.pop();
-      timeHistory.pop();
+
+  if (nameHistory.length > 5) { //Limits history to 5 unique items
+    nameHistory.pop();
+    wordHistory.pop();
+    timeHistory.pop();
   };
 
-  
-  for(let i = 0; i < nameHistory.length; i++) {
 
-      $('#scoreboardInput').append("<tr><td>" + nameHistory[i] + "</td><td>" + timeHistory[i] + "</td><td class='uk-flex'><button class='uk-button uk-button-default' type='button'>"+ wordHistory[i].length + "</button><div uk-dropdown>" + wordHistory[i] + "</div></td></tr>");
-    
+  for (let i = 0; i < nameHistory.length; i++) {
+
+    $('#scoreboardInput').append("<tr><td>" + nameHistory[i] + "</td><td>" + timeHistory[i] + "</td><td class='uk-flex'><button class='uk-button uk-button-default' type='button'>" + wordHistory[i].length + "</button><div uk-dropdown>" + wordHistory[i] + "</div></td></tr>");
+
   }
 };
 
@@ -201,7 +200,7 @@ function getGameHistory() {
 
 let APIKEY = "ssS6qrhl6fvn3W4QEtQrYHXKJmdrveFI";
 
-function gify(state , location) {
+function gify(state, location) {
 
 
   let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=1&q=` + state;
@@ -211,7 +210,7 @@ function gify(state , location) {
       return response.json();
     })
     .then(function (content) {
-      
+
       document.getElementById(location).src = content.data[0].images.downsized.url;
     });
 
