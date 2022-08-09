@@ -24,7 +24,7 @@
                 You're our last hope!
             </p>
         </header>
-        <!--startPoint page has the user enter a name to start typing game and will display scores of other players-->
+        <!-- Section contains inputs for user to enter name and begin the game-->
         <div class="uk-flex uk-flex-column" id="startPoint">
             <h3 class="uk-align-center uk-margin-small"> Enter your name to start: </h3>
             <input class="uk-input uk-align-center uk-margin-small uk-form-large uk-form-width-medium"
@@ -32,7 +32,7 @@
             <button class="uk-align-center uk-button-danger uk-button-large uk-margin-small"
                 id="nicknameBtn">Begin!</button>
         </div>
-
+        <!-- Section for the scoreboard on the landing page -->
         <div class="uk-flex uk-flex-column uk-width-large uk-align-center" id="scoreBoard">
             <h3 class="uk-align-center uk-margin-small">Local Scores:</h3>
             <table class="uk-table uk-table-divider ">
@@ -50,7 +50,7 @@
 
         </div>
     </div>
-    <!--gameBrief will allow user the have time to get ready to type bfore the gae starts-->
+    <!--gameBrief will allow user the have time to get ready to type bfore the game starts-->
     <div class="uk-flex uk-flex-column" id="gameBrief">
         <h2 id="startingText" class="uk-align-center uk-margin-small"></h2>
         <img id="startingGif"
@@ -58,14 +58,14 @@
             alt="placeHolder img" width="300" height="200" class="uk-align-center uk-margin-small">
         <h3 class="uk-align-center uk-margin-small" id="startTimer"></h3>
     </div>
-    <!--inGame page will have a timed typing game -->
+    <!--inGame page will have the timed typing game -->
     <div class="uk-flex uk-flex-column" id="inGame">
         <h2 class="uk-align-center uk-margin-small uk-margin-top-large">Hurry! You need to go faster!</h2>
         <h1 id="guessingWords" class="uk-align-center uk-margin-small"></h1>
         <h1 id="typedWord" class="uk-align-center uk-margin-small"></h1>
         <h3 id="inGameTimer" class="uk-align-center uk-margin-small">Time Left XX</h3>
     </div>
-    <!--EndGame page will show gifys for winners and losers. it will also show time and score-->
+    <!--EndGame page will show end results for the game-->
     <div class="uk-flex uk-flex-column" id="endGame">
         <h2 id="endingText" class="uk-align-center uk-margin-small"></h2>
         <img id="endingGif"

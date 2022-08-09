@@ -1,21 +1,21 @@
 //Section for defining global variables
 
-var startTimerEl = document.getElementById('startTimer');
 var timeLeft;
+var startTimerEl = document.getElementById('startTimer');
 var startBtn = document.getElementById("nicknameBtn");
 var endBtn = document.getElementById("returnHome");
 
 var userName;
 
 var nameHistory = JSON.parse(localStorage.getItem('nameHistory')) || [];
-var wordHistory = JSON.parse(localStorage.getItem('wordHistory')) || [];
+var wordHistory = JSON.parse(localStorage.getItem('wordHistory')) || []; //Grabs locally stored arrays and brings them into the script
 var timeHistory = JSON.parse(localStorage.getItem('timeHistory')) || [];
 
 //Section for defining functions
 
 function callWordsAPI() {
 
-  var wordsAPI = "https://random-words-api.herokuapp.com/w?n=10"; // calling on the the API for words
+  var wordsAPI = "https://random-words-api.herokuapp.com/w?n=10"; // calling on the the API for random words
   fetch(wordsAPI)
     .then(function (response) {
       return response.json();
@@ -29,36 +29,36 @@ function callWordsAPI() {
 //Function prepares the game by calling the words api and storing it. Handles the "gameBrief" element in the HTML document
 
 function gameStart(words) {
-  var startTimeLeft = 5;
-  var guessWordsObj = []; //Creates a multidimensional array of guesswords with strings broken out into separate arrays
 
-  userName = document.getElementById('nickname').value;//alowing user to enter their nickname for game.
-  $('#nickname').val("");
+  var startTimeLeft = 5;
+  var guessWordsObj = []; //Creates a multidimensional array, first dimension contains the words themselves, second dimension is the individual characters
+
+  userName = document.getElementById('nickname').value;
+  $('#nickname').val(""); //Wipes input value on landingPage
   if (userName == 'Logan Garland') {
     $('#startingText').text("Giphy is pronounced with a HARD G, Logan. We've lost already.")//Easter egg when the name Logan Garland is typed in
   } else {
-    $('#startingText').text("Get ready, " + userName + "! It's about to begin!");//Displays text. Get ready "userName"
+    $('#startingText').text("Get ready, " + userName + "! It's about to begin!");
   }
 
-
-  for (i = 0; i < words.length; i++) {  //
+  for (i = 0; i < words.length; i++) {  //Takes each random word and splits the individual characters into their own array
     var guessWord = words[i].split("")
     guessWordsObj.push(guessWord);
   }
 
   gify('sweating', 'startingGif');
   document.getElementById("landingPage").style.display = "none";
-  document.getElementById("gameBrief").style.display = "flex"; //Displays sweating gify in the gameBrief page
+  document.getElementById("gameBrief").style.display = "flex"; 
 
   var timeInterval = setInterval(function () {
 
     if (startTimeLeft > -1) {
-      startTimerEl.textContent = "Time to start: " + startTimeLeft; // when timer count down finished  text will display "Time to start"
+      startTimerEl.textContent = "Time to start: " + startTimeLeft; 
       startTimeLeft--;
     } else {
       startTimerEl.textContent = '';
-      clearInterval(timeInterval);  //clearing the timeIterval
-      typingGame(guessWordsObj);  //Words to type      
+      clearInterval(timeInterval);  
+      typingGame(guessWordsObj);       
     }
   }, 1000);
 };
@@ -69,28 +69,27 @@ function gameStart(words) {
 function typingGame(gameObjective) {
 
   document.getElementById("gameBrief").style.display = "none";
-  document.getElementById("inGame").style.display = "flex"; // will only display inGmae page 
+  document.getElementById("inGame").style.display = "flex"; 
 
   var i = 0;
   var j = 0;
   var successfulText = "";
   var correctWords = [];
-
-  var timeLeft = 20; //time durning in game
+  var timeLeft = 20; //time during the game
 
   var timeInterval = setInterval(function () {
 
     if (timeLeft > -1) {
-      $('#inGameTimer').text("Time Left: " + timeLeft)// displays time left in game
+      $('#inGameTimer').text("Time Left: " + timeLeft)
       timeLeft--;
     } else {
       $('#inGameTimer').text("");
-      clearInterval(timeInterval);// clears the in game timer 
+      clearInterval(timeInterval);
 
       $(document).off();
       gify('explosion', 'endingGif');
-      $('#endingText').text("You failed! You buffoon!"); //Displays the fail gify and the fail text
-      gameEnd(userName, correctWords, timeLeft);  //End game score     
+      $('#endingText').text("You failed! You buffoon!"); //If the user runs out of time, calls the gameEnd function
+      gameEnd(userName, correctWords, timeLeft);      
     }
   }, 1000);
 
@@ -100,8 +99,8 @@ function typingGame(gameObjective) {
 
     event.preventDefault();
 
-    if (event.key == gameObjective[i][j]) {
-      successfulText += gameObjective[i][j];//checking the key press to see if its the correct key that needs to be pressed
+    if (event.key == gameObjective[i][j]) { //checking the key press to see if its the correct key that needs to be pressed
+      successfulText += gameObjective[i][j]; 
       $('#typedWord').text(successfulText)
 
       j++;
@@ -114,28 +113,28 @@ function typingGame(gameObjective) {
         $('#typedWord').text("")
         successfulText = "";
 
-        if (i < gameObjective.length) {
-          $('#guessingWords').text(gameObjective[i].join(""));
+        if (i < gameObjective.length) { //Checks if the first word is completed and displays the next word
+          $('#guessingWords').text(gameObjective[i].join("")); 
           j = 0;
-        } else {
+        } else { //Checks if the user succeeded
           $(document).off();
-          gify('celebration', 'endingGif'); // celebration gify dispays when finished successfully
-          $('#endingText').text("I can't believe you actually pulled it off.");// when successfully finished game text will diplay "i cant belive you actually pulled it off"
+          gify('celebration', 'endingGif'); 
+          $('#endingText').text("I can't believe you actually pulled it off.");
           $('#inGameTimer').text("");
-          clearInterval(timeInterval); //clears the timer 
-          gameEnd(userName, correctWords, timeLeft); //Displays score 
+          clearInterval(timeInterval); 
+          gameEnd(userName, correctWords, timeLeft); 
         };
       }
 
-    } else if (event.key !== gameObjective[i][j]) {
+    } else if (event.key !== gameObjective[i][j]) { //Checks if user mistyped
       $(document).off();
       $('#typedWord').text("");
 
-      gify('explosion', 'endingGif'); //fail gify will display an eplosion 
-      $('#endingText').text("You failed! You buffoon!");// fail text will display "you failed! You buffoon!"
+      gify('explosion', 'endingGif');  
+      $('#endingText').text("You failed! You buffoon!");
       $('#inGameTimer').text("");
-      clearInterval(timeInterval);// clears timer 
-      gameEnd(userName, correctWords, timeLeft);  // Displays gameEnd score 
+      clearInterval(timeInterval);
+      gameEnd(userName, correctWords, timeLeft);  
     }
   });
 };
@@ -158,8 +157,6 @@ function gameEnd(userName, userWords, userTime) {
   localStorage.setItem('timeHistory', JSON.stringify(timeHistory));
   localStorage.setItem('wordHistory', JSON.stringify(wordHistory));
 
-
-
 }
 
 function returnHome() {
@@ -171,7 +168,6 @@ function returnHome() {
   getGameHistory();
 
 };
-
 
 //Function for storing gameData locally and Adjusting score table on landing page
 
@@ -186,7 +182,6 @@ function getGameHistory() {
     timeHistory.pop();
   };
 
-
   for (let i = 0; i < nameHistory.length; i++) {
 
     $('#scoreboardInput').append("<tr><td>" + nameHistory[i] + "</td><td>" + timeHistory[i] + "</td><td class='uk-flex'><button class='uk-button uk-button-default' type='button'>" + wordHistory[i].length + "</button><div uk-dropdown>" + wordHistory[i] + "</div></td></tr>");
@@ -194,14 +189,11 @@ function getGameHistory() {
   }
 };
 
-
-
 //Function for calling Giphy api, may be able to include in active game function
 
 let APIKEY = "ssS6qrhl6fvn3W4QEtQrYHXKJmdrveFI";
 
 function gify(state, location) {
-
 
   let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=1&q=` + state;
 
@@ -216,9 +208,7 @@ function gify(state, location) {
 
 }
 
-getGameHistory();
-
-
+getGameHistory(); //Calls getGameHistory to update scoreboard table with locally stored
 
 //Add eventListeners for return button and start button
 
